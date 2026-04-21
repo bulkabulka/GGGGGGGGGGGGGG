@@ -1,4 +1,5 @@
 # 🎲 Bulka Casino Pro
+# Autorzy: Vlad Kelman, Margo Rybchenko
 
 
 **Opis projektu:**
