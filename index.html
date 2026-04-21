@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulka Casino | Ultimate Gaming Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="preloader" class="preloader-overlay">
+        <div class="loader-content">
+            <i class="fas fa-meteor loader-icon"></i>
+            <h2>Inicjalizacja Systemu...</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="loading-progress"></div>
+            </div>
+            <p>Ładowanie zasobów kasyna (3+)</p>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box auth-box">
+            <div class="auth-tabs">
+                <button class="tab-btn active">Logowanie</button>
+                <button class="tab-btn">Rejestracja</button>
+            </div>
+            <div class="auth-form">
+                <i class="fas fa-user-astronaut auth-avatar"></i>
+                <h3>Witaj w Bulka Pro</h3>
+                <div class="input-group">
+                    <i class="fas fa-at"></i>
+                    <input type="text" id="login-name" placeholder="Twój Pseudonim lub Email">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-pass" placeholder="Hasło (opcjonalnie do testów)">
+                </div>
+                <button onclick="app.login()" class="btn-mega-glow">Wejdź do Gry <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <div id="deposit-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box deposit-box">
+            <button class="close-btn" onclick="app.closeDepositModal()"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom: 20px;">Zasilenie Konta</h3>
+            
+            <div class="deposit-methods">
+                <button class="method-btn active" id="method-blik" onclick="app.selectPayment('blik')">
+                    <span style="font-weight: 900; letter-spacing: 1px;">BLIK</span>
+                </button>
+                <button class="method-btn" id="method-card" onclick="app.selectPayment('card')">
+                    <i class="fas fa-credit-card"></i> Karta
+                </button>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-dollar-sign"></i>
+                <input type="number" id="deposit-amount" placeholder="Kwota (min. 50 USD)" min="50">
+            </div>
+
+            <div id="payment-details-blik" class="input-group">
+                <i class="fas fa-mobile-alt"></i>
+                <input type="text" id="blik-code" placeholder="Kod BLIK (6 cyfr)" maxlength="6">
+            </div>
+            
+            <div id="payment-details-card" class="input-group" style="display: none;">
+                <i class="fas fa-credit-card"></i>
+                <input type="text" id="card-number" placeholder="Numer karty (16 cyfr)" maxlength="19">
+            </div>
+
+            <div class="input-group" style="margin-top: 15px;">
+                <i class="fas fa-ticket-alt"></i>
+                <input type="text" id="deposit-promo" placeholder="Kod promocyjny (np. DAVID)">
+            </div>
+
+            <button onclick="app.processDeposit()" id="btn-process-pay" class="btn-mega-glow" style="margin-top: 20px;">Zapłać i Graj</button>
+        </div>
+    </div>
+
+    <div id="app-interface" class="main-wrapper" style="display: none;">
+        
+        <aside class="sidebar">
+            <div class="brand-header">
+                <div class="brand-logo">
+                    <i class="fas fa-dice-d20"></i> BULKA<span>PRO</span>
+                </div>
+                <div class="vip-badge">Level: <span id="vip-level">Bronze</span></div>
+            </div>
+
+            <div class="scrollable-menu">
+                <p class="menu-label">GŁÓWNE MENU</p>
+                <nav class="nav-menu">
+                    <button onclick="app.showTab('lobby')" class="nav-btn active" id="btn-lobby">
+                        <i class="fas fa-compass"></i> Odkrywaj
+                    </button>
+                    <button onclick="app.showTab('slots')" class="nav-btn" id="btn-slots">
+                        <i class="fas fa-slot-machine"></i> Automaty 3D
+                    </button>
+                    <button onclick="app.showTab('blackjack')" class="nav-btn" id="btn-blackjack">
+                        <i class="fas fa-spade"></i> Blackjack Pro
+                    </button>
+                    <button onclick="app.showTab('tournaments')" class="nav-btn" id="btn-tournaments">
+                        <i class="fas fa-trophy"></i> Turnieje
+                    </button>
+                    <button onclick="app.showTab('profile')" class="nav-btn" id="btn-profile">
+                        <i class="fas fa-user"></i> Mój Profil
+                    </button>
+                </nav>
+
+                <p class="menu-label">KONTO I WSPARCIE</p>
+                <nav class="nav-menu secondary-menu">
+                    <button onclick="app.openDepositModal()" class="nav-btn"><i class="fas fa-wallet"></i> Portfel i wpłaty</button>
+                    <button onclick="app.mockFeature('Bonusy i Promocje')" class="nav-btn"><i class="fas fa-gift"></i> Bonusy i Promocje</button>
+                    <button onclick="app.mockFeature('Wsparcie 24/7 (Live Chat)')" class="nav-btn"><i class="fas fa-headset"></i> Wsparcie 24/7</button>
+                </nav>
+            </div>
+
+            <div class="user-footer">
+                <img src="https://play-lh.googleusercontent.com/1dYQJY5pByM-uZH42tNh1LRN6bJfZbjhOg6pVudngG742iueR2KOIg3EC4Rc2b_VxoI" alt="Avatar" class="avatar-sm">
+                <div class="user-details">
+                    <span id="display-username">User</span>
+                    <small>Online</small>
+                </div>
+                <button onclick="app.logout()" class="btn-icon" title="Wyloguj"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </aside>
+
+        <main class="viewport">
+            
+            <header class="top-navbar">
+                <div class="search-widget">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Szukaj ulubionych gier (np. Cyberpunk Slots)...">
+                </div>
+                
+                <div class="nav-actions">
+                    <button onclick="app.mockFeature('Powiadomienia')" class="btn-icon notify-btn">
+                        <i class="fas fa-bell"></i><span class="badge">3</span>
+                    </button>
+                    <div class="balance-display">
+                        <div class="balance-labels">
+                            <small>Saldo Główne</small>
+                            <div class="amount"><span id="balance-val">1000</span> <span class="currency">USD</span></div>
+                        </div>
+                        <button class="btn-deposit" onclick="app.openDepositModal()"><i class="fas fa-plus"></i> Wpłać</button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="live-ticker">
+                <div class="ticker-label"><i class="fas fa-bolt"></i> Na żywo:</div>
+                <marquee behavior="scroll" direction="left" scrollamount="5">
+                    <span class="winner-item">Gracz <b>Margo***</b> wygrał 1500$ w Classic 777!</span>
+                    <span class="winner-item">Gracz <b>Kamil99</b> trafił Jackpot (5000$)!</span>
+                    <span class="winner-item">Gracz <b>Vlad***</b> dołączył do turnieju.</span>
+                </marquee>
+            </div>
+
+            <div class="tabs-container">
+                
+                <section id="tab-lobby" class="content-tab">
+                    <div class="hero-slider">
+                        <div class="slide slide-active">
+                            <div class="slide-content">
+                                <span class="promo-tag">Tylko dzisiaj!</span>
+                                <h1>!!!Zgarnij Bonus Powitalny 7777 USD!!!</h1>
+                                <p>Odbierz 7777 USD na naszej stronie!</p>
+                                <button onclick="app.claimBonus()" class="btn-slide-action">Odbierz Bonus</button>
+                            </div>
+                            <div class="slide-gfx"></div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">
+                        <h3>🔥 Gorące Gry</h3>
+                        <button class="btn-text">Zobacz wszystkie <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="game-showcase-grid">
+                        <div class="game-poster" onclick="app.launchGame('slots', 'cyber')">
+                            <div class="poster-img" style="background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317');">
+                                <div class="overlay-play"><i class="fas fa-play-circle"></i></div>
+                            </div>
+                            <div class="poster-info">
+                                <h4>Cyber Neon</h4>
+                                <p>Automaty • Wypłata 96%</p>
+                            </div>
+                        </div>
+                        
+                        <div class="game-poster" onclick="app.showTab('blackjack')">
+                            <div class="poster-img" style="background-image: url('https://images.unsplash.com/photo-1511193311914-0346f16efe90');">
+                                <div class="overlay-play"><i class="fas fa-play-circle"></i></div>
+                            </div>
+                            <div class="poster-info">
+                                <h4>Blackjack Pro</h4>
+                                <p>Karty • Klasyczna Gra</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-slots" class="content-tab" style="display:none;">
+                    <div class="slot-dashboard">
+                        <div class="slot-sidebar">
+                            <h3>Wybierz Maszynę</h3>
+                            <button onclick="games.slots.loadType('classic')" class="btn-slot-type active" id="type-classic">🍒 Classic 777</button>
+                            <button onclick="games.slots.loadType('cyber')" class="btn-slot-type" id="type-cyber">👾 Cyber Neon</button>
+                            <button onclick="games.slots.loadType('mystic')" class="btn-slot-type" id="type-mystic">🔮 Dark Magic</button>
+                            
+                            <div class="jackpot-widget">
+                                <p>Aktualny Jackpot</p>
+                                <h4>$ 124,580.99</h4>
+                            </div>
+                        </div>
+
+                        <div class="slot-main-area">
+                            <div class="machine-body theme-classic" id="machine-container">
+                                <h2 id="slot-title">Classic 777</h2>
+                                <div class="reels-frame">
+                                    <div class="reels-container">
+                                        <div class="reel" id="reel-1">🍒</div>
+                                        <div class="reel" id="reel-2">🍒</div>
+                                        <div class="reel" id="reel-3">🍒</div>
+                                    </div>
+                                    <div class="win-line"></div>
+                                </div>
+                                
+                                <div class="machine-controls-advanced">
+                                    <div class="control-group">
+                                        <label>ZAKŁAD</label>
+                                        <div class="bet-stepper">
+                                            <button onclick="document.getElementById('slot-bet').stepDown()">-</button>
+                                            <input type="number" id="slot-bet" value="50" min="10" step="10">
+                                            <button onclick="document.getElementById('slot-bet').stepUp()">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <button onclick="games.slots.spin()" id="spin-btn" class="btn-spin-master">
+                                        <div class="spin-ring"></div>
+                                        <span>ZAKRĘĆ</span>
+                                    </button>
+                                    
+                                    <div class="control-group">
+                                        <label>AUTO PLAY</label>
+                                        <button onclick="app.toggleAuto()" class="btn-auto"><i class="fas fa-sync-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div id="slot-msg" class="game-status-display">System gotowy do gry!</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-blackjack" class="content-tab" style="display:none;">
+                    <div class="premium-table-wrapper">
+                        <div class="bj-table">
+                            <div class="dealer-side">
+                                <div class="player-tag">Krupier (AI) <span class="score-badge" id="dealer-score">?</span></div>
+                                <div id="dealer-cards" class="cards-row"></div>
+                            </div>
+                            
+                            <div class="table-center-logo"><i class="fas fa-crown"></i></div>
+                            
+                            <div class="player-side">
+                                <div id="player-cards" class="cards-row"></div>
+                                <div class="player-tag">Ty <span class="score-badge" id="player-score">0</span></div>
+                            </div>
+                            
+                            <div class="bj-action-panel">
+                                <button onclick="games.bj.start()" id="bj-start" class="btn-bj-primary">Nowa Gra (100$)</button>
+                                <button onclick="games.bj.hit()" id="bj-hit" class="btn-bj-action" disabled>+ Dobrać (Hit)</button>
+                                <button onclick="games.bj.stand()" id="bj-stand" class="btn-bj-action" disabled><i class="fas fa-hand-paper"></i> Czekać (Stand)</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-tournaments" class="content-tab" style="display:none;">
+                    <div class="tournament-header">
+                        <h2>🏆 Mistrzostwa Jesieni 2026</h2>
+                        <p>Graj w automaty i wspinaj się w rankingu, aby wygrać część z puli 10,000$!</p>
+                    </div>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Miejsce</th>
+                                <th>Gracz</th>
+                                <th>Punkty</th>
+                                <th>Nagroda</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="rank-1"><td>1 <i class="fas fa-medal" style="color: gold;"></i></td><td>Alex_Pro</td><td>15,420</td><td>$5,000</td></tr>
+                            <tr class="rank-2"><td>2 <i class="fas fa-medal" style="color: silver;"></i></td><td>Margo_R</td><td>12,300</td><td>$2,500</td></tr>
+                            <tr class="rank-3"><td>3 <i class="fas fa-medal" style="color: #cd7f32;"></i></td><td>NightRider</td><td>9,850</td><td>$1,000</td></tr>
+                            <tr><td>4</td><td>Twoja_Stara_Gra</td><td>8,100</td><td>$500</td></tr>
+                            <tr class="current-user-row"><td>42</td><td><span id="tourney-username">User</span> (Ty)</td><td>150</td><td>-</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="tab-profile" class="content-tab" style="display:none;">
+                    <div class="tournament-header">
+                        <h2 style="color: #00f2fe;">Twoje Centrum Dowodzenia</h2>
+                        <p>Tutaj znajdziesz wszystkie informacje o swoim koncie i statystykach.</p>
+                    </div>
+                    <div class="slot-dashboard" style="display: flex; gap: 20px;">
+                        <div class="slot-sidebar" style="flex: 1; text-align: center;">
+                            <i class="fas fa-user-astronaut" style="font-size: 80px; color: var(--neon-pink); margin-bottom: 20px;"></i>
+                            <h3 id="profile-name">Gracz</h3>
+                            <p style="color: #888;">Status: Aktywny</p>
+                            <button class="btn-bj-primary" style="margin-top: 20px; width: 100%;" onclick="app.openDepositModal()">Zasil Konto</button>
+                        </div>
+                        <div class="machine-body" style="flex: 2; text-align: left;">
+                            <h3 style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">Statystyki Konta</h3>
+                            <p><strong>Całkowite saldo:</strong> <span id="profile-balance" style="color: var(--cyan);">0</span> USD</p>
+                            <p><strong>Poziom wierności:</strong> <span id="profile-role">VIP Tester</span></p>
+                            <p><strong>Ulubiona gra:</strong> Classic 777</p>
+                            <p><strong>Data rejestracji:</strong> Dzisiaj</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            
+            <footer class="app-footer">
+                <p>Gra stworzona w celach edukacyjnych (Projekt Szkolny). Hazard wiąże się z ryzykiem.</p>
+                <div class="footer-links">
+                    <span>Regulaminu niema</span> | <span>Odpowiedzialna Gra (3+)</span> | <span>Polityki Prywatności też niema</span>
+                </div>
+            </footer>
+            
+        </main>
+    </div>
+
+    <div class="floating-chat-btn" onclick="app.mockFeature('Live Chat')">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
