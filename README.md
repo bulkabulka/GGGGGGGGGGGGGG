@@ -13,3 +13,10 @@ Interaktywna platforma kasynowa stworzona w celach edukacyjnych. Projekt demonst
 **Technologie:**
 - JavaScript (Vanilla)
 - HTML5 / CSS3
+
+### 👥 Log prac zespołu (Work Log)
+
+| Osoba | Zadania | Czas pracy |
+| :--- | :--- | :--- |
+| **Vlad** | Core JS, logika gier (Slots/BJ), LocalStorage, Backend-simulation | 14h |
+| **Margo** | Testowanie UI/UX, przygotowanie zasobów graficznych, dokumentacja projektu | 10h |
