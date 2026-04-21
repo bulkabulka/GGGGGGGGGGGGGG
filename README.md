@@ -19,5 +19,5 @@ Interaktywna platforma kasynowa stworzona w celach edukacyjnych. Projekt demonst
 
 | Osoba | Zadania | Czas pracy |
 | --- | --- | --- |
-| **Vlad** | html,js,css | w trakcie |
-| **Margo** | Moralna pomoc, regulamin, dokumentacja projektu | w trakcie |
+| **Vlad** | slots, blackjack, profiles, localStorage itp | w trakcie |
+| **Margo** |  | w trakcie |
