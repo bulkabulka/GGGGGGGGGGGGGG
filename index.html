@@ -105,6 +105,9 @@
                     <button onclick="app.showTab('blackjack')" class="nav-btn" id="btn-blackjack">
                         <i class="fas fa-spade"></i> Blackjack Pro
                     </button>
+                    <button id="btn-coin" class="nav-btn" onclick="app.launchGame('coin')">
+                        <i class="fas fa-coins"></i> Rzut Monetą
+                    </button>
                     <button onclick="app.showTab('tournaments')" class="nav-btn" id="btn-tournaments">
                         <i class="fas fa-trophy"></i> Turnieje
                     </button>
@@ -116,8 +119,8 @@
                 <p class="menu-label">KONTO I WSPARCIE</p>
                 <nav class="nav-menu secondary-menu">
                     <button onclick="app.openDepositModal()" class="nav-btn"><i class="fas fa-wallet"></i> Portfel i wpłaty</button>
-                    <button onclick="app.mockFeature('Bonusy i Promocje')" class="nav-btn"><i class="fas fa-gift"></i> Bonusy i Promocje</button>
-                    <button onclick="app.mockFeature('Wsparcie 24/7 (Live Chat)')" class="nav-btn"><i class="fas fa-headset"></i> Wsparcie 24/7</button>
+                    <button onclick="app.showBonuses()" class="nav-btn"><i class="fas fa-gift"></i> Bonusy i Promocje</button>
+                    <button onclick="app.openSupport()" class="nav-btn"><i class="fas fa-headset"></i> Wsparcie 24/7</button>
                 </nav>
             </div>
 
@@ -136,7 +139,7 @@
             <header class="top-navbar">
                 <div class="search-widget">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Szukaj ulubionych gier (np. Cyberpunk Slots)...">
+                    <input type="text" placeholder="Szukaj ulubionych gier (ᯓ ✈︎   ▌ ▌)">
                 </div>
                 
                 <div class="nav-actions">
@@ -281,6 +284,28 @@
                     </div>
                 </section>
 
+                <section id="tab-coin" class="content-tab" style="display:none;">
+                    <div class="tournament-header">
+                        <h2>🪙 Rzut Monetą</h2>
+                        <p>Szansa 50/50. Podwajasz stawkę albo tracisz wszystko!</p>
+                    </div>
+                    
+                    <div class="coin-container">
+                        <div id="coin-result" class="coin-icon">❓</div>
+                        
+                        <div class="bet-controls">
+                            <input type="number" id="coin-bet" placeholder="Stawka ($)" class="neon-input" value="100">
+                        </div>
+                        
+                        <div class="coin-buttons">
+                            <button onclick="games.coin.flip('orzel')" class="btn-coin-bet btn-orzel">🦅 Orzeł</button>
+                            <button onclick="games.coin.flip('reszka')" class="btn-coin-bet btn-reszka">🆖 Reszka</button>
+                        </div>
+                        
+                        <p id="coin-msg" class="coin-status">Wybierz stronę i rzuć monetą!</p>
+                    </div>
+                </section>
+
                 <section id="tab-tournaments" class="content-tab" style="display:none;">
                     <div class="tournament-header">
                         <h2>🏆 Mistrzostwa Jesieni 2026</h2>
@@ -291,17 +316,12 @@
                             <tr>
                                 <th>Miejsce</th>
                                 <th>Gracz</th>
-                                <th>Punkty</th>
+                                <th>Punkty (Saldo)</th>
                                 <th>Nagroda</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="rank-1"><td>1 <i class="fas fa-medal" style="color: gold;"></i></td><td>Alex_Pro</td><td>15,420</td><td>$5,000</td></tr>
-                            <tr class="rank-2"><td>2 <i class="fas fa-medal" style="color: silver;"></i></td><td>Margo_R</td><td>12,300</td><td>$2,500</td></tr>
-                            <tr class="rank-3"><td>3 <i class="fas fa-medal" style="color: #cd7f32;"></i></td><td>NightRider</td><td>9,850</td><td>$1,000</td></tr>
-                            <tr><td>4</td><td>Twoja_Stara_Gra</td><td>8,100</td><td>$500</td></tr>
-                            <tr class="current-user-row"><td>42</td><td><span id="tourney-username">User</span> (Ty)</td><td>150</td><td>-</td></tr>
-                        </tbody>
+                        <tbody id="leaderboard-body">
+                            </tbody>
                     </table>
                 </section>
 

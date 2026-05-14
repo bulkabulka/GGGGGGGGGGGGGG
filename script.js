@@ -36,7 +36,17 @@ const app = {
             progress.style.width = '100%';
             setTimeout(() => {
                 document.getElementById('preloader').style.opacity = '0';
-                setTimeout(() => document.getElementById('preloader').style.display = 'none', 500);
+                setTimeout(() => {
+                    document.getElementById('preloader').style.display = 'none';
+                    
+                    // Проверяем, есть ли сохраненная сессия
+                    const savedUser = localStorage.getItem('activeUser');
+                    if(savedUser && this.validUsers[savedUser]) {
+                        document.getElementById('login-name').value = savedUser;
+                        document.getElementById('login-pass').value = this.validUsers[savedUser].pass;
+                        this.login(); // Автоматически логинимся
+                    }
+                }, 500);
             }, 500);
         }, 1000);
     },
@@ -51,6 +61,9 @@ const app = {
             if(passInput === userData.pass) {
                 this.user = userData.name;
                 
+                // Сохраняем логин для авто-входа
+                localStorage.setItem('activeUser', input);
+                
                 const savedBalance = localStorage.getItem(`balance_${input}`);
                 this.balance = savedBalance ? parseInt(savedBalance) : userData.startBalance;
 
@@ -58,9 +71,10 @@ const app = {
                 document.getElementById('app-interface').style.display = 'flex';
                 
                 document.getElementById('display-username').innerText = this.user;
-                document.getElementById('tourney-username').innerText = this.user;
                 document.getElementById('vip-level').innerText = userData.role;
-                document.getElementById('profile-role').innerText = userData.role;
+                
+                const profileRole = document.getElementById('profile-role');
+                if(profileRole) profileRole.innerText = userData.role;
                 
                 this.updateUI();
                 games.slots.loadType('classic');
@@ -73,14 +87,12 @@ const app = {
         }
     },
 
-    // --- НОВАЯ СИСТЕМА ДЕПОЗИТА ---
     openDepositModal() {
         document.getElementById('deposit-modal').style.display = 'flex';
     },
 
     closeDepositModal() {
         document.getElementById('deposit-modal').style.display = 'none';
-        // Очищаем поля при закрытии
         document.getElementById('deposit-amount').value = '';
         document.getElementById('blik-code').value = '';
         document.getElementById('card-number').value = '';
@@ -104,7 +116,6 @@ const app = {
         const amount = parseInt(document.getElementById('deposit-amount').value);
         const promo = document.getElementById('deposit-promo').value.toUpperCase().trim();
 
-        // 1. Пасхалка ДАВИДА
         if(promo === "DAVID" || promo === "ДАВИД") {
             const sidebar = document.querySelector('.slot-sidebar'); 
             if(sidebar && !document.getElementById('type-dew')) {
@@ -120,12 +131,11 @@ const app = {
             return; 
         }
 
-        // 2. Пасхалка MOHEB
         if(promo === "MOHEB" || promo === "МОХЕБ") {
             const sidebar = document.querySelector('.slot-sidebar'); 
             if(sidebar && !document.getElementById('type-moheb')) {
                 const jackpot = document.querySelector('.jackpot-widget');
-                const btnHtml = `<button onclick="games.slots.loadType('moheb')" class="btn-slot-type" id="type-moheb" style="color: #d4af37; border-color: #d4af37; text-shadow: 0 0 5px #d4af37;">🏎️ Moheb mode</button>`;
+                const btnHtml = `<button onclick="games.slots.loadType('moheb')" class="btn-slot-type" id="type-moheb" style="color: #d4af37; border-color: #d4af37; text-shadow: 0 0 5px #d4af37;">🏎️ Autobahn</button>`;
                 if (jackpot) jackpot.insertAdjacentHTML('beforebegin', btnHtml);
                 else sidebar.insertAdjacentHTML('beforeend', btnHtml);
             }
@@ -136,12 +146,10 @@ const app = {
             return; 
         }
 
-        // 3. Валидация суммы (Минимум 50 USD)
         if(isNaN(amount) || amount < 50) {
             return this.notify("Błąd: Minimalna kwota wpłaty to 50 USD.", "error");
         }
 
-        // 4. Обработка обычных промокодов
         let finalAmount = amount;
         if(promo) {
             if(this.promoCodes[promo]) {
@@ -157,7 +165,6 @@ const app = {
             }
         }
 
-        // 5. Имитация обработки банком
         const btn = document.getElementById('btn-process-pay');
         const originalText = btn.innerHTML;
         btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Przetwarzanie...`;
@@ -179,6 +186,11 @@ const app = {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(`tab-${id}`).style.display = 'block';
         document.getElementById(`btn-${id}`).classList.add('active');
+
+        // 🔥 БРОНЕБОЙНЫЙ ФИКС: Если открыли вкладку турниров — принудительно обновляем таблицу
+        if (id === 'tournaments') {
+            this.updateLeaderboard();
+        }
     },
 
     launchGame(tabId, gameType = null) {
@@ -188,7 +200,10 @@ const app = {
         }
     },
 
-    logout() { location.reload(); },
+    logout() { 
+        localStorage.removeItem('activeUser'); 
+        location.reload(); 
+    },
 
     notify(message, type = "success") {
         const container = document.getElementById('toast-container');
@@ -200,6 +215,20 @@ const app = {
         setTimeout(() => toast.remove(), 4000);
     },
 
+    // --- НОВЫЕ РАБОЧИЕ КНОПКИ ---
+    showBonuses() {
+        this.notify("Aktywne kody: START1000 (+1000$), BULKA_VIP (+5000$). Szukaj też ukrytych Easter Eggów!", "success");
+    },
+
+    openSupport() {
+        const msg = prompt("Live Chat 24/7: Opisz swój problem, a nasz asystent AI spróbuje pomóc:");
+        if (msg) {
+            setTimeout(() => {
+                this.notify("Krupier AI: Zgłoszenie przyjęte! Skontaktujemy się z Tobą mailowo w ciągu 24h.", "success");
+            }, 1200);
+        }
+    },
+    // --- ЗАГЛУШКИ ДЛЯ КНОПОК ---
     mockFeature(featureName) {
         this.notify(`Moduł "${featureName}" jest obecnie niedostępny w wersji demonstracyjnej.`, "error");
     },
@@ -209,15 +238,55 @@ const app = {
         if(bonusClaimed) {
             this.notify("Już odebrałeś swój bonus powitalny!", "error");
         } else {
-            this.balance += 200;
+            this.balance += 7777;
             localStorage.setItem(`bonus_${this.user}`, "true");
             this.updateUI();
-            this.notify("Sukces! Dodano 200$ bonusu powitalnego do twojego salda.", "success");
+            this.notify("Sukces! Dodano 7777$ bonusu powitalnego do twojego salda.", "success");
         }
     },
 
     toggleAuto() {
         this.notify("Tryb Auto-Spin został aktywowany. (Funkcja VIP)", "success");
+    },
+
+    // --- ТАБЛИЦА ЛИДЕРОВ ---
+    updateLeaderboard() {
+        const board = document.getElementById('leaderboard-body');
+        if(!board) return; // Если не нашел таблицу - ничего не делает
+
+        const players = [
+            { name: "Alex_Pro", score: 15420 },
+            { name: "Moheb", score: 12300 },
+            { name: "NightRider", score: 9850 },
+            { name: "Twoja_Stara_Gra", score: 8100 }
+        ];
+
+        // Добавляем тебя
+        players.push({ name: `${this.user} (Ty)`, score: this.balance, isMe: true });
+
+        // Сортировка по очкам (балансу)
+        players.sort((a, b) => b.score - a.score);
+
+        board.innerHTML = ''; // Чистим перед перерисовкой
+        players.forEach((p, index) => {
+            let rank = index + 1;
+            let icon = '';
+            let rowClass = p.isMe ? 'current-user-row' : '';
+            
+            if(rank === 1) { icon = '<i class="fas fa-medal" style="color: gold;"></i>'; rowClass += ' rank-1'; }
+            else if(rank === 2) { icon = '<i class="fas fa-medal" style="color: silver;"></i>'; rowClass += ' rank-2'; }
+            else if(rank === 3) { icon = '<i class="fas fa-medal" style="color: #cd7f32;"></i>'; rowClass += ' rank-3'; }
+
+            let prize = rank === 1 ? '$5,000' : (rank === 2 ? '$2,500' : (rank === 3 ? '$1,000' : (rank === 4 ? '$500' : '-')));
+
+            board.innerHTML += `
+                <tr class="${rowClass.trim()}">
+                    <td>${rank} ${icon}</td>
+                    <td>${p.name}</td>
+                    <td>${p.score.toLocaleString()}</td>
+                    <td>${prize}</td>
+                </tr>`;
+        });
     },
 
     updateUI() {
@@ -231,12 +300,14 @@ const app = {
         
         const currentLogin = document.getElementById('login-name').value.toLowerCase().trim();
         localStorage.setItem(`balance_${currentLogin}`, this.balance);
+
+        // Обновляем турнирную таблицу!
+        this.updateLeaderboard();
     }
 };
 
 // --- ИГРОВЫЕ МОДУЛИ ---
 const games = {
-    // 1. СИСТЕМА СЛОТОВ
     slots: {
         types: {
             classic: { name: "Classic 777", symbols: ['🍒', '🍋', '🔔', '💎', '7️⃣'], themeClass: 'theme-classic', jackpot: '7️⃣', mult: 20 },
@@ -250,11 +321,11 @@ const games = {
                 mult: 5 
             },
             moheb: { 
-                name: "Dark Moheb Mode", 
+                name: "German Autobahn", 
                 symbols: [
-                    '<img src="https://cdn11.bigcommerce.com/s-ydriczk/images/stencil/1500x1500/products/88784/92305/Jin-from-BTS-K-Pop-face-mask-available-now-at-starstills__93277.1548765854.jpg?c=2" class="car-logo">',
-                    '<img src="https://m.media-amazon.com/images/I/71MJ+wF4yXL._AC_UF1000,1000_QL80_.jpg" class="car-logo">',
-                    '<img src="https://i.pinimg.com/564x/c3/dd/7e/c3dd7e75aecbcce93f9ba9da4ece817f.jpg" class="car-logo">'
+                    '<img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" class="car-logo">',
+                    '<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg" class="car-logo">',
+                    '<img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" class="car-logo">'
                 ], 
                 themeClass: 'theme-moheb', 
                 jackpot: '<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg" class="car-logo">', 
@@ -269,7 +340,6 @@ const games = {
             this.currentType = typeKey;
             const cfg = this.types[typeKey];
 
-            // Магия с темным дубом для Мохеба
             if(typeKey === 'moheb') {
                 document.body.classList.add('dark-oak-bg');
             } else {
@@ -350,7 +420,6 @@ const games = {
         }
     },
 
-    // 2. ПРОДВИНУТЫЙ БЛЭКДЖЕК
     bj: {
         suits: ['♥', '♦', '♣', '♠'],
         values: ['2','3','4','5','6','7','8','9','10','J','Q','K','A'],
@@ -487,6 +556,56 @@ const games = {
             document.getElementById('bj-stand').disabled = !play;
             document.getElementById('bj-start').disabled = play;
             document.getElementById('bj-start').innerText = play ? "Gra Trwa..." : "Nowa Gra (100$)";
+        }
+    },
+    // (тут заканчивается код bj)
+     // <-- не забудь запятую после блэкджека!
+
+    // 3. RZUT MONETĄ (COIN FLIP)
+    coin: {
+        isFlipping: false,
+        
+        flip(choice) {
+            if(this.isFlipping) return;
+            
+            const bet = parseInt(document.getElementById('coin-bet').value);
+            if(isNaN(bet) || bet < 10 || bet > app.balance) return app.notify("Błąd: Brak środków lub zła stawka! (Min. 10$)", "error");
+
+            this.isFlipping = true;
+            app.balance -= bet;
+            app.updateUI();
+
+            const coinEl = document.getElementById('coin-result');
+            const msg = document.getElementById('coin-msg');
+            
+            coinEl.innerText = "🔄";
+            coinEl.classList.add('fa-spin'); // крутим иконку
+            msg.innerText = "Losowanie w toku...";
+            msg.style.color = "#fff";
+            sfx.play('spin'); // используем звук от слотов
+
+            setTimeout(() => {
+                coinEl.classList.remove('fa-spin');
+                
+                // 50% шанс
+                const result = Math.random() < 0.5 ? 'orzel' : 'reszka';
+                coinEl.innerText = result === 'orzel' ? '🦅' : '🆖';
+                
+                if(choice === result) {
+                    const win = bet * 2;
+                    app.balance += win;
+                    msg.innerText = `Wygrałeś! +$${win}`;
+                    msg.style.color = "#00ff00";
+                    sfx.play('win');
+                } else {
+                    msg.innerText = `Przegrałeś. Wypadło: ${result === 'orzel' ? 'Orzeł' : 'Reszka'}`;
+                    msg.style.color = "#ff3333";
+                    sfx.play('lose');
+                }
+                
+                app.updateUI();
+                this.isFlipping = false;
+            }, 1000); // 1 секунда интриги
         }
     }
 };

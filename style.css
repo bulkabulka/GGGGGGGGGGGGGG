@@ -274,3 +274,111 @@ body {
     width: 110px !important; /* Делаем значки BMW, Audi, Mercedes массивнее */
     height: 110px !important;
 }
+/* --- PRZYCISKI AKCJI (MONETA) --- */
+.action-btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.2); /* Делает кнопку ярче при наведении */
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.action-btn:active {
+    transform: translateY(1px); /* Физический эффект нажатия */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+/* --- STYLIZACJA RZUTU MONETĄ (NEON CASINO) --- */
+.coin-container {
+    text-align: center;
+    margin-top: 30px;
+    background: #0f172a; /* Темный фон, как у слотов */
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid #00f2fe; /* Неоновая окантовка */
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.coin-icon {
+    font-size: 120px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+}
+
+.neon-input {
+    padding: 12px;
+    width: 180px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: 1px solid #00f2fe;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    outline: none;
+    box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.1);
+    margin-bottom: 30px;
+    transition: all 0.3s;
+}
+
+.neon-input:focus {
+    box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.3), 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+.coin-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-coin-bet {
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Орёл - неоновый синий */
+.btn-orzel {
+    background: transparent;
+    border: 2px solid #00f2fe;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+.btn-orzel:hover {
+    background: rgba(0, 242, 254, 0.15);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+    transform: translateY(-3px);
+}
+
+/* Решка - неоновый розовый/фиолетовый */
+.btn-reszka {
+    background: transparent;
+    border: 2px solid #ff00ff;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
+}
+.btn-reszka:hover {
+    background: rgba(255, 0, 255, 0.15);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    transform: translateY(-3px);
+}
+
+.coin-status {
+    margin-top: 25px;
+    font-size: 18px;
+    color: #aaa;
+}
