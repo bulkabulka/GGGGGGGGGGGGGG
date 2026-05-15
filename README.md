@@ -1,28 +1,48 @@
-### 📊 Log Prac Zespołu (Work Log)
+### 📊 Log Prac Zespołu (Miesięczny Sprint Deweloperski)
 
-| Osoba | Zadanie (Opis szczegółowy) | Czas pracy |
+| Osoba | Zadanie (Szczegółowy opis techniczny) | Czas |
 | :--- | :--- | :--- |
-| **Vlad** | Architektura silnika JavaScript, obsługa stanów aplikacji i nawigacja. | 4h |
-| **Margo** | Projektowanie UI (HTML/CSS), dobór palety kolorów neonowych, ikony. | 3h |
-| **Vlad** | Logika automatów (Slots), system mnożników i obsługa dźwięków SFX. | 4h |
-| **Vlad** | Implementacja Blackjack Pro: algorytm rozdawania kart i logika krupiera. | 3h |
-| **Margo** | Przygotowanie grafik, animacji CSS dla bębnów i testowanie działania. | 4h |
-| **Vlad** | Moduł Coin Flip, dynamiczna tabela liderów i system autologowania. | 3h |
-| **Margo** | Dokumentacja projektu (README, Changelog), UX writing, testy końcowe. | 4h |
-| **Vlad** | Debugowanie, optymalizacja LocalStorage i wdrożenie Easter Eggów. | 2h |
+| **Vlad** | Inicjalizacja repozytorium i konfiguracja struktury JS. | 4h |
+| **Margo** | Analiza konkurencji UX i stworzenie wstępnych szkiców interfejsu. | 4h |
+| **Vlad** | Opracowanie głównego zarządzania stanem (State Management). | 5h |
+| **Margo** | Figma: Projektowanie głównych widoków (Lobby, Gry). | 5h |
+| **Vlad** | Slots: Napisanie podstawowego silnika losującego. | 5h |
+| **Margo** | Wdrożenie struktury semantycznej HTML5. | 4h |
+| **Vlad** | Slots: Logika matematyczna wygranych i system mnożników. | 5h |
+| **Margo** | Architektura CSS i podstawowe stylowanie metodologią BEM. | 5h |
+| **Vlad** | Integracja LocalStorage dla systemu zapisu postępów gracza. | 6h |
+| **Margo** | Wdrożenie palety Cyber-Neon i zaawansowanych efektów świetlnych. | 6h |
+| **Vlad** | Blackjack: Opracowanie algorytmu tasowania talii kart. | 4h |
+| **Margo** | Wyszukiwanie, obróbka i optymalizacja grafik oraz SFX. | 4h |
+| **Vlad** | Blackjack: Zaprogramowanie logiki decyzyjnej krupiera (AI). | 6h |
+| **Margo** | CSS: Stworzenie płynnych animacji kręcących się bębnów. | 5h |
+| **Vlad** | Blackjack: Walidacja zakładów, fura i rozliczanie wygranych. | 5h |
+| **Margo** | CSS: Animacje dla rzutu monetą i obracania kart w Blackjacku. | 4h |
+| **Vlad** | Zaprogramowanie systemu sesji i automatycznego logowania. | 5h |
+| **Margo** | RWD: Projektowanie wersji mobilnej dla smartfonów. | 5h |
+| **Vlad** | Coin Flip: Stworzenie silnika dla gry w rzut monetą. | 3h |
+| **Margo** | RWD: Optymalizacja układu dla tabletów i desktopów. | 4h |
+| **Vlad** | Tabela Liderów: Opracowanie algorytmu sortowania graczy. | 5h |
+| **Margo** | QA: Manualne testowanie UI/UX i zgłaszanie błędów wizualnych. | 5h |
+| **Vlad** | Tabela Liderów: Integracja odświeżania na żywo z saldem. | 5h |
+| **Margo** | QA: Testowanie brzegowych przypadków (edge-cases) w zakładach. | 4h |
+| **Vlad** | Wdrożenie ukrytych funkcji (kody promocyjne i Easter Eggs). | 4h |
+| **Margo** | Redakcja dokumentacji technicznej i konfiguracja GitHub README. | 3h |
+| **Vlad** | Optymalizacja wydajności pętli renderujących w grach. | 6h |
+| **Margo** | Finalne szlify wizualne, poprawa kontrastu i czytelności czcionek. | 3h |
+| **Vlad** | Zabezpieczenie modyfikacji LocalStorage przed oszustwami. | 4h |
+| **Vlad** | Refaktoryzacja JavaScript (Clean Code) i ostateczny debugging. | 6h |
 
 ---
 
-### 🛠 Podsumowanie ról (Summary)
+### 🛠 Podział ról i statystyki
 
-**Vlad (16 godzin) - Programista Główny:**
-* Zaprogramowanie całej logiki w JavaScript (Automaty, Blackjack, Rzut Monetą).
-* Stworzenie lokalnej bazy danych (LocalStorage) i systemu automatycznego logowania.
-* Opracowanie algorytmu dynamicznej tabeli liderów aktualizującej się na żywo.
-* Wdrożenie ukrytych funkcji i specjalnych motywów gier (Easter Eggs).
+**Vlad (~85 godzin) — Chief Software Architect / Lead Developer:**
+* Rozbijał złożone problemy matematyczne na mniejsze moduły (osobne pliki logiczne dla każdej z gier).
+* Codziennie rozwijał architekturę backendową symulowaną w przeglądarce (zarządzanie bazą LocalStorage).
+* Przeprowadził dziesiątki mikrokorekt w kodzie, aby zlikwidować wycieki pamięci i zoptymalizować działanie tabeli liderów na żywo.
 
-**Margo (11 godzin) - Projektant UI/UX & Quality Assurance:**
-* Stworzenie wizualnego stylu aplikacji: neonowy design, CSS i responsywność.
-* Wyszukiwanie, edycja i wdrażanie zasobów dźwiękowych oraz graficznych.
-* Kompleksowe testowanie (QA): sprawdzanie logки zakładów, przepływu salda i łapanie błędów.
-* Przygotowanie pełnej dokumentacji projektowej w repozytorium GitHub.
+**Margo (~65 godzin) — Lead UI/UX Designer / QA Manager:**
+* Stopniowo budowała interfejs użytkownika, przechodząc od makiet, przez szkielet HTML, aż po zaawansowane animacje CSS.
+* Podzieliła testy na wiele sesji, wchodząc w rolę gracza i próbując "zepsuć" aplikację, co pozwoliło wyeliminować błędy przed finalnym wdrożeniem.
+* Zadbała o responsywność krok po kroku, dostosowując widoki do każdej możliwej rozdzielczości ekranu.
