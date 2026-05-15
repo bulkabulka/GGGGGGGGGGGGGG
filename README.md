@@ -1,15 +1,17 @@
 # 🎲 Bulka Casino Pro
 
-**Opis projektu:**
-Interaktywna platforma kasynowa stworzona w celach edukacyjnych. Projekt demonstracyjny pokazujący logikę gier hazardowych, zaawansowane zarządzanie stanem w przeglądarce oraz responsywny design w stylu Cyber-Neon.
+**Opis projektu i założenia techniczne:**
+**Bulka Casino Pro** to w pełni interaktywna aplikacja webowa typu Single Page Application (SPA), stworzona w celach edukacyjnych jako zaawansowany projekt z informatyki. Głównym założeniem projektu było stworzenie funkcjonalnego symulatora gier kasynowych, który demonstruje praktyczne zastosowanie języka JavaScript (Vanilla JS) w manipulacji modelem DOM, asynchronicznej obsłudze zdarzeń (event-driven programming) oraz złożonym zarządzaniu stanem aplikacji (State Management). 
+
+Całość logiki biznesowej działa całkowicie po stronie klienta (Client-Side), wykorzystując pamięć przeglądarki (`localStorage`) do symulowania relacyjnej bazy danych. Pozwoliło to na wdrożenie trwałego systemu kont, utrzymywania sesji użytkownika, zapisu salda oraz śledzenia postępów w czasie rzeczywistym. Interfejs został zaprojektowany od podstaw zgodnie z zasadami Responsive Web Design (RWD) w nowoczesnej, immersyjnej estetyce Cyber-Neon, oferując płynne animacje CSS, efekty dźwiękowe i intuicyjne doświadczenie użytkownika (UX) na dowolnym urządzeniu.
 
 **Główne Funkcje:**
-- **Automaty (Slots):** Różne motywy gry (w tym ukryte Easter Eggs aktywowane specjalnymi kodami).
-- **Blackjack Pro:** Gra w karty z krupierem (AI) i autorskim algorytmem tasowania talii.
-- **Rzut Monetą (Coin Flip):** Szybka gra ryzyka (50/50) z płynnymi animacjami CSS.
-- **System Kont:** Automatyczne logowanie i zapisywanie postępów sesji (saldo) w `localStorage`.
-- **Turnieje na żywo:** Dynamiczna tabela liderów, aktualizująca pozycję gracza w czasie rzeczywistym.
-- **Portfel:** Interaktywny system wpłat z obsługą kodów promocyjnych.
+- **Automaty (Slots):** Zaawansowany silnik losujący z różnymi motywami gry, systemem mnożników oraz ukrytymi funkcjami (Easter Eggs) aktywowanymi specjalnymi kodami.
+- **Blackjack Pro:** Symulator gry w karty z zaimplementowanym sztucznym krupierem (AI), autorskim algorytmem tasowania talii i pełną walidacją zasad (fura, podwojenie, remis).
+- **Rzut Monetą (Coin Flip):** Szybka gra ryzyka (50/50) oparta na czystym prawdopodobieństwie z płynnymi animacjami CSS.
+- **Zarządzanie Sesją:** Automatyczne logowanie i bezstratne zapisywanie postępów (salda) w lokalnej pamięci przeglądarki.
+- **Turnieje na żywo:** Dynamiczna tabela liderów, która stale nasłuchuje zmian w saldzie gracza i aktualizuje jego pozycję w rankingu w czasie rzeczywistym.
+- **Interaktywny Portfel:** System symulujący wpłaty depozytów z obsługą kodów promocyjnych i powiadomień systemowych (Toast Notifications).
 
 ---
 
@@ -46,9 +48,9 @@ Interaktywna platforma kasynowa stworzona w celach edukacyjnych. Projekt demonst
 **Vlad (38 godzin) — Lead Developer:**
 * Konsekwentnie rozwijał logikę gier w JavaScript, dzieląc pracę na kilkugodzinne sesje dla poszczególnych modułów (Slots, Blackjack, Coin Flip).
 * Opracował stabilny system zapisu postępów gracza w przeglądarce (LocalStorage) oraz mechanizm autologowania.
-* Zaprojektował dynamiczną tabelę liderów, aktualizującą pozycje w czasie rzeczywistym.
+* Zaprojektował dynamiczną tabelę liderów, aktualizującą pozycje w czasie rzeczywistym na podstawie zmian w saldzie.
 
 **Margo (21 godzin) — UI/UX Designer & QA:**
 * Krok po kroku budowała interfejs w stylu Cyber-Neon, zaczynając od struktury HTML, a kończąc na płynnych animacjach CSS.
-* Zadbała o responsywność aplikacji na urządzeniach mobilnych.
-* Przeprowadziła testy QA, wyłapując luki w interfejsie i pomagając dopracować finalny wygląd projektu.
+* Zadbała o pełną responsywność aplikacji na urządzeniach mobilnych i desktopowych.
+* Przeprowadziła szczegółowe testy QA, wyłapując luki w interfejsie i pomagając dopracować finalny wygląd oraz logikę projektu.
