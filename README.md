@@ -1,3 +1,18 @@
+# 🎲 Bulka Casino Pro
+
+**Opis projektu:**
+Interaktywna platforma kasynowa stworzona w celach edukacyjnych. Projekt demonstracyjny pokazujący logikę gier hazardowych, zaawansowane zarządzanie stanem w przeglądarce oraz responsywny design w stylu Cyber-Neon.
+
+**Główne Funkcje:**
+- **Automaty (Slots):** Różne motywy gry (w tym ukryte Easter Eggs aktywowane specjalnymi kodami).
+- **Blackjack Pro:** Gra w karty z krupierem (AI) i autorskim algorytmem tasowania talii.
+- **Rzut Monetą (Coin Flip):** Szybka gra ryzyka (50/50) z płynnymi animacjami CSS.
+- **System Kont:** Automatyczne logowanie i zapisywanie postępów sesji (saldo) w `localStorage`.
+- **Turnieje na żywo:** Dynamiczna tabela liderów, aktualizująca pozycję gracza w czasie rzeczywistym.
+- **Portfel:** Interaktywny system wpłat z obsługą kodów promocyjnych.
+
+---
+
 ### 📊 Log Prac Zespołu (Sprint Deweloperski)
 
 | Osoba | Zadanie (Szczegółowy opis techniczny) | Czas |
